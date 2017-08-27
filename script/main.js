@@ -4,21 +4,28 @@ var limit,sortiranje,tip_pretrage,radijus,ll;
 var sort = 1;
 // Deklaracija ostalih promenljivih
 var str;
+var zoom; 
 var pozicija_korisnika;
 var mesta;
+var cityCircle;
 var map;
 var options;
 var infoWindow;
 
 // Pozicija korisnika i iscrtavanje mape.
 function initMap() {
+    zoom = 15;
     map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 15,
+        zoom: zoom,
         center: new google.maps.LatLng(43.321421, 21.895247),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         disableDefaultUI: false,
         streetViewControl: true
     });
+    UserPosition();
+}
+function UserPosition(){
+    document.getElementById("display").innerHTML = "";
     infoWindow = new google.maps.InfoWindow;
     // Try HTML5 geolocation.
     if (navigator.geolocation) {
@@ -38,6 +45,16 @@ function initMap() {
             icon: '../images/user_marker.png',
             title: 'Tvoja trenutna pozicija',
             map: map
+        });
+        cityCircle = new google.maps.Circle({
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.5,
+            strokeWeight: 1,
+            fillColor: '#FF0000',
+            fillOpacity: 0.15,
+            map: map,
+            center: pozicija_korisnika,
+            radius: 1000.0
         });
         infoWindow.setPosition(pozicija_korisnika);
         infoWindow.setContent('Tvoja Lokacija');
@@ -78,7 +95,7 @@ function InitApiUrl(){
     if(sort == 1){
         sortiranje = '&sortByDistance=1';
     }else{
-        sortiranje = '';
+        sortiranje = '&price=1';
     }
 
     tip_pretrage = 'coffee';
@@ -95,7 +112,7 @@ function InitApiUrl(){
 // Generisanje 10 markera u zadatom radijusu po udaljenosti.
 function GenerateVenues(){
     $.get(url, function (result) {
-        mesta = result.response.groups[0].items;  
+        mesta = result.response.groups[0].items;  // groups[0] zato sto su lose napravili json format, pa taj objekat ima nekako 2 niza gde je drugi prazan, a prvi sadrzi informacije
         for (var i in mesta){
             str = '<p><strong>' + mesta[i].venue.name + '</strong> '; // zameni sa javascript a ne Jquery (i vidi isto za url ako umes)
             str += '(jeste)';
@@ -110,8 +127,25 @@ function GenerateVenues(){
 }
 function SortirajPo(value)
 {   
+    if(value==2){
+        document.getElementById("filterID").innerHTML = `
+            <div class="text_filtera">
+            <span >Use filter option to search by coffee price</span><br><br>
+            <label class="labela" for="Sortiraj">Price by:</label>
+            <form>
+                <input type="radio" name="Cheap" value="1" checked>Cheap<br>
+                <input type="radio" name="Moderate" value="2">Moderate<br>
+                <input type="radio" name="Expensive" value="3">Expensive<br>
+                <input type="radio" name="Very Expensive" value="4"> Very Expensive
+            </form>
+            <a href="javascript:void(0);" onclick="CloseFilter()"><div class="dugme">Close [X]</div></a>
+            </div>
+        `;
+        //document.getElementById("filterID").style.height = "none";
+    }else{
+        document.getElementById("filterID").style.display = "none";
+    }
     sort = value;
-    document.getElementById("display").innerHTML = "";
     initMap();
 }
 // Proverava da li je lokacija u datom radijusu.

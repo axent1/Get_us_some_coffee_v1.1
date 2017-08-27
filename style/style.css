@@ -1,17 +1,170 @@
-#msg {
-    border:1px solid #333;
-    background-color:#ccc;
-    padding: 2em;
-    word-wrap: break-word;
-    width: 90%;
-    margin-bottom: 2em;
+body, html {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    background-color: #fff;
+    margin: 0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+a {
+    text-decoration: none;
+}
+*{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+}
+.filter{
+    width: 100%;
+    background: rgba(78, 78, 78, 0.92);
+    height: 86%;
+    display: none;
+    padding:15px;
+    border-bottom-right-radius: 5px;
+    z-index: 200;
+    position: absolute;
+}
+.labela{
+    float: left;
+    margin-top: 5px;
+    margin-right: 10px;
+    color: white;
+    font-weight: bold;
+}
+.text_filtera{
+    background: #2d2d2d;
+    padding: 2%;
+    width: 30%;
+    min-width: 250px;
+    border-radius: 3px;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.dugme{
+    border: 1px solid #3079ed;
+    color: #fff;
+    margin: 0 auto;
+    margin-top: 10px;
+    text-align: center;
+    text-shadow: 0 1px rgba(0,0,0,0.1);
+    background-color: #4d90fe;
+    background-image: -webkit-linear-gradient(top,#4d90fe,#4787ed);
+    background-image: -moz-linear-gradient(top,#4d90fe,#4787ed);
+    background-image: -ms-linear-gradient(top,#4d90fe,#4787ed);
+    background-image: -o-linear-gradient(top,#4d90fe,#4787ed);
+    padding: 8px;
+    border-radius: 3px;
+}
+.dugme:hover{
+	background-image: -webkit-linear-gradient(top,#0E62EB,#3F74CA);
+	background-image: -moz-linear-gradient(top,#0E62EB,#3F74CA);
+	cursor: pointer;
+}
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+.topnav .icon {
+    display: none;
+}
+@media screen and (max-width: 600px) {
+    .topnav a:not(:first-child) {display: none;}
+    .topnav a.icon {
+        float: right;
+        display: block;
+    }
+}
+@media screen and (max-width: 600px) {
+    .topnav.responsive {position: relative;}
+    .topnav.responsive .icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
 }
 #display {
-    width: 90%;
+    width: 30%;
+    height: 86%;
+    float: left;
     padding:2em;
     border: 1px solid #999;
 }
 #map {
-    width: 90%;
-    height: 500px;
+    width: 70%;
+    float: left;
+    height: 86%;
 }
+.klasa_select{
+    display: block;
+    width: 150px;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #d4d4d4;
+    background-color: #2d2d2d;
+    background-image: none;
+    border: 1px solid #000000;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+.mojfuter {
+    bottom: 0;
+    background: #333;
+    width: 100%;
+    height: 8%;
+    min-height: 60px;
+    color: white;
+    padding: 5px 0 0 0;
+    position: fixed;
+}   
+.about_site {
+    color: rgb(132, 132, 132);
+    float: right;
+    padding-right: 2em;
+    font-size: 13px;
+}
+p {
+    margin: 0 0 10px;
+}
+input[type=radio]:checked ~ .check {
+    border: 5px solid #0DFF92;
+  }
+  
+  input[type=radio]:checked ~ .check::before{
+    background: #0DFF92;
+  }
+  
+  input[type=radio]:checked ~ label{
+    color: #0DFF92;
+  }
