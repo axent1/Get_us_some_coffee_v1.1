@@ -5,25 +5,57 @@ var sort = 1;
 // Deklaracija ostalih promenljivih
 var str;
 var zoom; 
+var broj = 0;
 var pozicija_korisnika;
 var mesta;
 var cityCircle;
 var map;
 var options;
 var infoWindow;
+// Deklaracija i inicijalizacija promenljivih za direkcije
+var directionsDisplay;
+var directionsService = new google.maps.DirectionsService();
 
-// Pozicija korisnika i iscrtavanje mape.
+// iscrtavanje mape.
 function initMap() {
     zoom = 15;
+    directionsDisplay = new google.maps.DirectionsRenderer();
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: zoom,
         center: new google.maps.LatLng(43.321421, 21.895247),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        disableDefaultUI: false,
-        streetViewControl: true
+        panControl: false,
+        disableDefaultUI: true,
+        streetViewControl: false
     });
+    directionsDisplay.setMap(map);
     UserPosition();
 }
+
+//crtanje rute
+function calcRoute(v1,v2) {
+    var start = pozicija_korisnika;
+    var end = new google.maps.LatLng(v1, v2);
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(start);
+    bounds.extend(end);
+    map.fitBounds(bounds);
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.WALKING
+    };
+    directionsService.route(request, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+            directionsDisplay.setMap(map);
+        } else {
+            alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
+        }
+    });
+}
+
+// Pozicija korisnika.
 function UserPosition(){
     document.getElementById("display").innerHTML = "";
     infoWindow = new google.maps.InfoWindow;
@@ -31,7 +63,7 @@ function UserPosition(){
     if (navigator.geolocation) {
         options = {
             enableHighAccuracy: true,
-            timeout: 5000,
+            timeout: 8000,
             maximumAge: 0
         };
         navigator.geolocation.getCurrentPosition(function(position) {
@@ -60,6 +92,20 @@ function UserPosition(){
         infoWindow.setContent('Tvoja Lokacija');
         infoWindow.open(map);
         map.setCenter(pozicija_korisnika);
+        setTimeout(function(){
+                infoWindow.close();
+            }, 
+            '2000'
+        );
+        setTimeout(function(){
+                infoWindow.close();
+                cityCircle.setMap(null);
+            }, 
+            '2300'
+        );
+        google.maps.event.addDomListener(window, 'resize', function() {
+            map.setCenter(pozicija_korisnika);
+        });
         InitApiUrl();
         }, 
         function() {
@@ -73,7 +119,7 @@ function UserPosition(){
     }
 }
 
-// funkcija koja podnosi greske
+// funkcija koja podnosi greske.
 function handleLocationError(browserHasGeolocation, infoWindow, pozicija_korisnika) {
     infoWindow.setPosition(pozicija_korisnika);
     infoWindow.setContent(browserHasGeolocation ?
@@ -82,6 +128,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pozicija_korisni
     infoWindow.open(map);
 }
 
+// inicijalizacija API url adrese 
 function InitApiUrl(){
     // inicijalizacija API endpointa i kljuceva
     client_id = 'OZZ0YQOCRCTTEEHRG3HL0IWMKTAJ0KCRPU1WS3O5WVINZI3K';
@@ -110,7 +157,7 @@ function InitApiUrl(){
     ll = pozicija_korisnika.lat+', '+pozicija_korisnika.lng;
 
     // inicijalizacija parametra za API, url adrese i kljuca; 
-    params = 'll=' + ll + '&query=' + tip_pretrage + '&radius=' + radijus + '&limit=' + limit + '&openNow=1' + sortiranje;
+    params = 'll=' + ll + '&query=' + tip_pretrage + '&radius=' + radijus + '&limit=' + limit + '&venuePhotos=1&openNow=1' + sortiranje;
     key = '&client_id=' + client_id + '&client_secret=' + client_secret + '&v=' + '20140626';
     url = base_url + endpoint + params + key;
     GenerateVenues();
@@ -119,19 +166,35 @@ function InitApiUrl(){
 // Generisanje 10 markera u zadatom radijusu po udaljenosti.
 function GenerateVenues(){
     $.get(url, function (result) {
+        //$('#display').text(JSON.stringify(url));
         mesta = result.response.groups[0].items;  // groups[0] zato sto su lose napravili json format, pa taj objekat ima nekako 2 niza gde je drugi prazan, a prvi sadrzi informacije
+        $('#display').append('<table><tbody><tr class="opisi"><td>No.</td><td>Picture</td><td>Name</td><td>Distance</td></tr>');
         for (var i in mesta){
-            str = '<p><strong>' + mesta[i].venue.name + '</strong> '; // zameni sa javascript a ne Jquery (i vidi isto za url ako umes)
-            str += '(jeste)';
-            $('#display').append(str);
+            i++;
+            broj = i;
+            i--;
+            str = '<tr>';
+            str += '<td class="broj">' + broj + '</td>';
+            str += '<td class="slika_td"><img width="80px" height="80px" src="https://igx.4sqi.net/img/general/300x300' + mesta[i].venue.photos.groups[0].items[0].suffix + '" /></td>';
+            str += '<td class="opis_td"><div class="opis_liste">'+mesta[i].venue.name+'</div></td>'; // zameni sa javascript a ne Jquery (i vidi isto za url ako umes)
+            str += '<td class="distance">' + mesta[i].venue.location.distance + '</td>';
+            str += '</tr>';
+            $('#display table tbody').append(str);
             marker = new google.maps.Marker({
                 position: new google.maps.LatLng(mesta[i].venue.location.lat,mesta[i].venue.location.lng),
                 animation: google.maps.Animation.DROP,
                 map: map
             });
+            marker.addListener('click', function() {
+                map.setZoom(10);
+                map.setCenter(marker.getPosition());
+                calcRoute(mesta[i].venue.location.lat,mesta[i].venue.location.lng);
+              });
         }
+        $('#display').append('</table></tbody>');
     });
 }
+// Funkciji se prosledjuje vrednost po cemu se sortira 1-distanca, 2-cena low, 3-cena medium, 4-cena high, 5-cena very high
 function SortirajPo(value)
 {   
     if(value == 2){
@@ -169,6 +232,8 @@ function SortirajPo(value)
         `;
     }else{
         document.getElementById("filterID").style.display = "none";
+        document.getElementById("fs").style.background = null;
+        document.getElementById("fs").style.borderBottom = null;
         document.getElementById("filterID").innerHTML = `
         <div class="text_filtera"><span >You can use filter option to search by distance or coffee price</span><br><br>
          <label class="labela" for="Sortiraj">Sort by:</label>
@@ -182,8 +247,4 @@ function SortirajPo(value)
     }
     sort = value;
     initMap();
-}
-// Proverava da li je lokacija u datom radijusu.
-function calcDistance(p1, p2) {
-    return (google.maps.geometry.spherical.computeDistanceBetween(p1,p2)).toFixed(2);
 }

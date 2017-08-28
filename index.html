@@ -25,7 +25,6 @@
            document.getElementById("filterID").style.display = "block";
            document.getElementById("fs").style.background = "#4e4e4e";
            document.getElementById("fs").style.borderBottom = "3px solid #178466";
-
       }
       function CloseFilter(){
             document.getElementById("filterID").style.display = "none";
@@ -62,13 +61,13 @@
         <a id="fs" href="javascript:void(0);" onclick="DisplayFilter()"><img style="margin-right:5px;" src="../images/filter.png" />Filter Search</a>
         <a id="contact"href="#contact"><img style="margin-right:5px;" src="../images/contact.png" />Contact</a>
         <a id="about" href="#about"><img style="margin-right:5px;" src="../images/about.png" />About</a>
-        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsive_nav()">&#9776;</a>
+        <a href="javascript:void(0);" style="font-size:19px;" class="icon" onclick="responsive_nav()">&#9776;</a>
     </div>
     <div class="filter" id="filterID">
         <div class="text_filtera"><span >You can use filter option to search by distance or coffee price</span><br><br>
         <label class="labela" for="Sortiraj">Sort by:</label>
         <select class="klasa_select" id ="Sortiraj" name="Sortiraj" onmousedown="this.value='';" onchange="SortirajPo(this.value);">
-            <option value='1' selected="Distance">Distance</option>
+            <option value='1' selected>Distance</option>
             <option value='2'>Price</option>
         </select>
         <a href="javascript:void(0);" onclick="CloseFilter()"><div class="dugme">Close [X]</div></a>

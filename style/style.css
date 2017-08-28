@@ -91,14 +91,13 @@ a {
 .topnav {
     overflow: hidden;
     background-color: #333;
-    height: 50px;
 }
 .topnav a {
     float: left;
     display: block;
     color: #f2f2f2;
     text-align: center;
-    padding: 10px 16px;
+    padding: 14px 16px;
     margin-bottom: 2px;
     text-decoration: none;
     font-size: 17px;
@@ -106,7 +105,6 @@ a {
 .topnav a:hover {
     background-color: #178466;
     color: white;
-    border-bottom: 3px solid red;
 }
 .topnav .icon {
     display: none;
@@ -135,8 +133,46 @@ a {
     width: 30%;
     height: 86%;
     float: left;
-    padding:2em;
-    border: 1px solid #999;
+    padding: 0px 5px 0px 5px;
+    background: #333333;
+    overflow-y: scroll;
+}
+#display table{
+    width: 100%;
+    background: black;
+    padding: 5px;
+    border-radius: 5px;
+}
+#display table tr td img{
+    border-radius: 5px;
+}
+td{
+    border: 1px solid #a5a5a5;  
+    color: white;
+}
+.opisi{
+    text-align: center;
+    color: white;
+}
+.opisi td{
+    background:#22714e;
+}
+#display table tr{
+    background-image: -webkit-linear-gradient(top,#797979,#585858);
+}
+.slika_td{
+    width: 50px;
+}
+.broj{
+    width:10px;
+    text-align: center;
+}
+.distance{
+    width: 70px;
+    text-align: center;    
+}
+.opis_td{
+    text-align: center;
 }
 #map {
     width: 70%;
@@ -260,4 +296,21 @@ ul li .check::before {
     transition: background 0.25s linear;
     -webkit-transition: background 0.25s linear;
 }
-    
+.text_filtera select option {
+    padding:5px;
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    cursor: pointer;
+}
+::-webkit-scrollbar-track {
+    background: url(../images/scroll.png) repeat-y;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #0DFF92;
+}
+::selection {
+    color: #33B59C;
+    background: rgba(81, 224, 255, 0.10);
+}
