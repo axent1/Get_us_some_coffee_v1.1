@@ -160,6 +160,10 @@ td{
 #display table tr{
     background-image: -webkit-linear-gradient(top,#797979,#585858);
 }
+#display table tr:hover{
+    background-image: -webkit-linear-gradient(top,#3C3C3C,#181818);
+    cursor: pointer;
+}
 .slika_td{
     width: 50px;
 }
@@ -234,7 +238,7 @@ input[type=radio]:checked ~ label{
     padding: 20px;
 }
 .popup_container{
-    padding: 10px;
+    padding: 10px;  
     color: black;
     border-radius: 5px; 
 }

@@ -1,4 +1,14 @@
+// globalne promenljive
 var sort = 1;
+var pozicija_korisnika;
+var directionsDisplay;
+var directionsService;
+var map;
+var options;
+var markers=[];
+var contents = [];
+var infowindows = [];
+var Index_id = 0;
 
 function Globalna(){
     // Deklaracija API promenljivih
@@ -7,19 +17,13 @@ function Globalna(){
     // Deklaracija ostalih promenljivih
     var str; 
     var broj = 0;
-    var Index_id = 0;
-    var pozicija_korisnika;
     var mesta;
     var cityCircle;
-    var map;
-    var options;
     var infoWindow;
-    // Deklaracija i inicijalizacija promenljivih za direkcije
-    var directionsDisplay;
-    var directionsService;
-
     initMap();
     // iscrtavanje mape.
+
+
     function initMap() {
         directionsDisplay = new google.maps.DirectionsRenderer();
         map = new google.maps.Map(document.getElementById('map'), {
@@ -32,30 +36,6 @@ function Globalna(){
         });
         directionsDisplay.setMap(map);
         UserPosition();
-    }
-
-    //crtanje rute
-    function calcRoute(v1) {
-        var start = pozicija_korisnika;
-        var end = v1;
-        var bounds = new google.maps.LatLngBounds();
-        bounds.extend(start);
-        bounds.extend(end);
-        map.fitBounds(bounds);
-        var request = {
-            origin: start,
-            destination: end,
-            travelMode: google.maps.TravelMode.WALKING
-        };
-        directionsService = new google.maps.DirectionsService()
-        directionsService.route(request, function (response, status) {
-            if (status == google.maps.DirectionsStatus.OK) {
-                directionsDisplay.setDirections(response);
-                directionsDisplay.setMap(map);
-            } else {
-                alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
-            }
-        });
     }
 
     // Pozicija korisnika.
@@ -168,9 +148,6 @@ function Globalna(){
 
     // Generisanje 10 markera u zadatom radijusu po udaljenosti.
     function GenerateVenues(){
-        var markers=[];
-        var contents = [];
-        var infowindows = [];
         $.get(url, function (result) {
             //$('#display').text(JSON.stringify(url));
             mesta = result.response.groups[0].items;  // groups[0] zato sto su lose napravili json format, pa taj objekat ima nekako 2 niza gde je drugi prazan, a prvi sadrzi informacije
@@ -179,7 +156,7 @@ function Globalna(){
                 i++;
                 broj = i;
                 i--;
-                str = '<tr id='+i+'>';
+                str =  '<tr onclick="calcRoute(markers['+i+'].getPosition(),'+i+');" id='+i+'>';
                 str += '<td class="broj">' + broj + '</td>';
                 str += '<td class="slika_td"><img width="80px" height="80px" src="https://igx.4sqi.net/img/general/300x300' + mesta[i].venue.photos.groups[0].items[0].suffix + '" /></td>';
                 str += '<td class="opis_td"><div class="opis_liste">'+mesta[i].venue.name+'</div></td>'; // zameni sa javascript a ne Jquery (i vidi isto za url ako umes)
@@ -200,13 +177,7 @@ function Globalna(){
                     maxWidth: 300
                 });
                 google.maps.event.addListener(markers[i], 'click', function() {
-
-                    infowindows[this.index].open(map,markers[this.index]);
-                    map.panTo(markers[this.index].getPosition());
-                    document.getElementById(Index_id).style.background = null;
-                    document.getElementById(this.index).style.background = '#37b95f';
-                    Index_id = this.index;
-                    calcRoute(markers[this.index].getPosition());
+                    calcRoute(markers[this.index].getPosition(),this.index);
                 });      
             }
             $('#display').append('</table></tbody>');
@@ -265,5 +236,34 @@ function SortirajPo(value)
         `;
     }
     sort = value;
-    Globalna();
+    Globalna(1);
+}
+function calcRoute(v1,v2) {
+    var start = pozicija_korisnika;
+    var end = v1;
+    var bounds = new google.maps.LatLngBounds();
+    bounds.extend(start);
+    bounds.extend(end);
+    map.fitBounds(bounds);
+    var request = {
+        origin: start,
+        destination: end,
+        travelMode: google.maps.TravelMode.WALKING
+    };
+    directionsService = new google.maps.DirectionsService()
+    directionsService.route(request, function (response, status) {
+        if (status == google.maps.DirectionsStatus.OK) {
+            directionsDisplay.setDirections(response);
+            directionsDisplay.setMap(map);
+            for (var i in infowindows){
+                infowindows[i].close();
+            }
+            infowindows[v2].open(map,markers[v2]);
+            document.getElementById(Index_id).style.background = null;
+            document.getElementById(v2).style.background = '#37b95f';
+            Index_id = v2;
+        } else {
+            alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);
+        }
+    });
 }
