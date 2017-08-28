@@ -109,6 +109,8 @@ function Globalna(){
             'Error: The Geolocation service failed.' :
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
+        map.setZoom(2);
+        $('#display').append('<br><strong><font color="white">Turn location on for your device</font></strong><br><a href="https://support.google.com/accounts/answer/3467281?hl=en">[CLICK]</a>');
     }
 
     // inicijalizacija API url adrese 
