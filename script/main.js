@@ -22,6 +22,8 @@ function Globalna(){
     var infoWindow;
 
     document.getElementById('about_page').style.display = 'none';
+    document.getElementById('details_page').style.display = 'none';
+    document.getElementById("details_page").innerHTML = '';
     document.getElementById('initialization').style.display = 'block';
     initMap();
 
@@ -110,6 +112,11 @@ function Globalna(){
         infoWindow.setContent(browserHasGeolocation ?
             'Error: The Geolocation service failed.' :
             'Error: Your browser doesn\'t support geolocation.');
+        if (confirm("The Geolocation service failed. Click OK if you turned ON geolocation")) {
+            Globalna();
+        } else {
+            document.getElementById('initialization').style.display = 'none';            
+        }
         infoWindow.open(map);
         map.setZoom(2);
         $('#display').append('<br><strong><font color="white">Turn location on for your device</font></strong><br><a href="https://support.google.com/accounts/answer/3467281?hl=en">[CLICK]</a>');
@@ -163,7 +170,7 @@ function Globalna(){
                 str =  '<tr class="hover_tr" onclick="calcRoute(markers['+i+'].getPosition(),'+i+');" id='+i+'>';
                 str += '<td class="broj">' + broj + '</td>';
                 str += '<td class="slika_td"><img width="80px" height="80px" src="https://igx.4sqi.net/img/general/300x300' + mesta[i].venue.photos.groups[0].items[0].suffix + '" /></td>';
-                str += '<td class="opis_td"><div class="opis_liste">'+mesta[i].venue.name+'</div><a href="#" onclick="DisplayDetails(\'' + mesta[i].venue.id + '\',\''+mesta[i].venue.name+'\',\'' +mesta[i].venue.price.tier+'\',\''+mesta[i].venue.location.distance+'\')"><div class="dugme2">Details</div></a></td>';
+                str += '<td class="opis_td"><div class="opis_liste">'+mesta[i].venue.name+'</div><a href="javascript:void(0);" onclick="DisplayDetails(\'' + mesta[i].venue.id + '\',\''+mesta[i].venue.name+'\',\'' +mesta[i].venue.price.tier+'\',\''+mesta[i].venue.location.distance+'\',\''+mesta[i].tips[0].text+'\')"><div class="dugme2">Details</div></a></td>';
                 str += '<td class="distance">' + mesta[i].venue.location.distance + '</td>';
                 str += '</tr>';
                 $('#display table tbody').append(str);
@@ -245,6 +252,8 @@ function SortirajPo(value)
     }
     sort = value;
     document.getElementById('about_page').style.display = 'none';
+    document.getElementById('details_page').style.display = 'none';
+    document.getElementById("details_page").innerHTML = '';
     Globalna();
 }
 

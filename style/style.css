@@ -207,6 +207,9 @@ td{
 .opis_liste{
     margin-bottom: 10px;
 }
+.slika_iz_liste{
+    width:80px; height:80px;
+}
 #map {
     width: 70%;
     float: left;
@@ -217,7 +220,7 @@ td{
     width: 100%;
     display:none;
     position: absolute;
-    z-index: 9999;
+    z-index: 999;
     height: 86%;
 }
 #about_page{
@@ -225,16 +228,22 @@ td{
     width: 100%;
     display:none;
     position: absolute;
-    z-index: 900;
+    z-index: 100;
     height: 86%;
 }
 #details_page{
-    background: rgba(78, 78, 78, 0.65);
+    background: rgba(78, 78, 78, 0.95);
     width: 100%;
     display:none;
     position: absolute;
-    z-index: 900;
+    z-index: 100;
     height: 86%;
+}
+.ict_details{
+    width: 30%;
+    height: 200px;
+    background: black;
+    color:white;
 }
 .init_image{
     margin-left: 40%;
@@ -365,6 +374,41 @@ ul li .check::before {
 .text_filtera select option {
     padding:5px;
 }
+
+
+#slides{
+    position: relative;
+    padding: 0px;
+    margin: 0 auto;
+    list-style-type: none;
+}
+.slide{
+    position: absolute;
+    margin-top:50px;
+    margin-left: 30%;
+    border:5px solid #AEAEAE;
+    width: 40%;
+    height: 500px;
+    border-radius: 10px;
+    opacity: 0;
+    z-index: 1;
+    -webkit-transition: opacity 1s;
+    -moz-transition: opacity 1s;
+    -o-transition: opacity 1s;
+    transition: opacity 1s;
+}
+.showing{
+    opacity: 1;
+    z-index: 2;
+}
+.slide{
+    font-size: 40px;
+    padding: 40px;
+    box-sizing: border-box;
+    background: #333;
+    color: #fff;
+}
+
 ::-webkit-scrollbar {
     width: 7px;
     height: 7px;
