@@ -16,9 +16,19 @@ function DisplayDetails(id,name,price,distance,tips){
 
     var id = id;
     var name = name;
-    var price = price;
+    var price1;
     var distance = distance;
     var tips = tips;
+
+    if(price==1){
+        price1 = 'Cheap';
+    }else if(price==2){
+        price1 = 'Moderate';
+    }else if(price==3){
+        price1 = 'Expensive';
+    }else if(price==4){
+        price1 = 'Very Expensive';
+    }
 
     var client_id1 = 'OZZ0YQOCRCTTEEHRG3HL0IWMKTAJ0KCRPU1WS3O5WVINZI3K';
     var client_secret1 = 'Z11HIZTIKBNALPZXJNFRPAF3XR0U3IJEYYHWIO4SJHY43SNG';
@@ -37,22 +47,19 @@ function DisplayDetails(id,name,price,distance,tips){
     function PreuzmiSlike(){
         $.get(url1, function (result) {    
             var slide = result.response.photos.items; 
+            $('#details_page').append('<br><div class="ict_details"><span>Name:&nbsp;&nbsp;'+name+'</span></div>');
+            $('#details_page').append('<div class="ict_details"><span>Price:&nbsp;&nbsp;'+price1+'</span></div>');
+            $('#details_page').append('<div class="ict_details"><span>Distance:&nbsp;&nbsp;'+distance+'</span></div>');
+            $('#details_page').append('<div class="ict_details"><span>Tips:&nbsp;&nbsp;'+tips+'</span></div>');
             $('#details_page').append('<ul id="slides">');
             for (var i in slide){
                 if(i==0){
-                    $('#details_page ul').append('<li class="slide showing"><img width="100%;" height="400px;" src="https://igx.4sqi.net/img/general/width960'+slide[i].suffix+'"></li>');
+                    $('#details_page ul').append('<li class="slide showing"><img width="100%;" height="370px;" src="https://igx.4sqi.net/img/general/width960'+slide[i].suffix+'"></li>');
                 }else{
-                    $('#details_page ul').append('<li class="slide"><img width="100%;" height="400px;" src="https://igx.4sqi.net/img/general/width960'+slide[i].suffix+'"></li>');
+                    $('#details_page ul').append('<li class="slide"><img width="100%;" height="370px;" src="https://igx.4sqi.net/img/general/width960'+slide[i].suffix+'"></li>');
                 }
             }
             $('#details_page').append('</ul>');
-            $('#details_page').append('<div class="ict_details">');
-                $('#details_page').append('<span>Name:'+name+'</span>');
-                $('#details_page').append('<span>Price:'+price+'</span>');
-                $('#details_page').append('<span>Price:'+distance+'</span>');
-                $('#details_page').append('<span>Tips:'+tips+'</span>');
-                $('#details_page').append('<span>Tips:'+tips+'</span>');
-            $('#details_page').append('</div>');
             //document.getElementById('initialization').style.display = 'none';
             //
         });
