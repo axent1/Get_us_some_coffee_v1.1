@@ -233,6 +233,11 @@ input[type=radio]:checked ~ label{
     width: 100%;
     padding: 20px;
 }
+.popup_container{
+    padding: 10px;
+    color: black;
+    border-radius: 5px; 
+}
 .container ul{
     list-style: none;
     margin: 0;
