@@ -6,6 +6,8 @@
   <title>Get us some coffee</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf-8">
+  <link rel="shortcut icon" type="image/png" href="/images/favicon.png"/>
+  <link rel="shortcut icon" href="/images/favicon.ico" />
   <link href="/style/style.css" type="text/css" rel="stylesheet" />
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyASFdn6e3gkZF7BC4nIq8y5rFdCeyfCwFE&libraries=geometry&callback=initMap" type="text/javascript"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
@@ -22,19 +24,44 @@
       function DisplayFilter(){
            document.getElementById("filterID").style.display = "block";
            document.getElementById("fs").style.background = "#4e4e4e";
+           document.getElementById("fs").style.borderBottom = "3px solid #178466";
+
       }
       function CloseFilter(){
-           document.getElementById("filterID").style.display = "none";
-           document.getElementById("fs").style.background = "#333";
+            document.getElementById("filterID").style.display = "none";
+            document.getElementById("fs").style.background = null;
+            document.getElementById("fs").style.borderBottom = null;
+            document.getElementById("filterID").innerHTML = `
+            <div class="text_filtera"><span >You can use filter option to search by distance or coffee price</span><br><br>
+            <label class="labela" for="Sortiraj">Sort by:</label>
+            <select class="klasa_select" id ="Sortiraj" name="Sortiraj" onmousedown="this.value='';" onchange="SortirajPo(this.value);">
+                <option value='1' selected="Distance">Distance</option>
+                <option value='2'>Price</option>
+            </select>
+            <a href="javascript:void(0);" onclick="CloseFilter()"><div class="dugme">Close [X]</div></a>
+            </div>
+            `;
+      }
+      function ApplyFilter(){
+            document.getElementById("filterID").style.display = "none";
+            document.getElementById("fs").style.background = null;
+            document.getElementById("fs").style.borderBottom = null;
+            var radios = document.getElementsByClassName('priceradio');
+            for (var i = 0, length = radios.length; i < length; i++) {
+                if (radios[i].checked) {
+                        SortirajPo(i+3);
+                    break;
+                }
+            } 
       }
   </script>
 </head>
 <body>
     <div class="topnav" id="myTopnav">
-        <a id="home" href="javascript:void(0);" onclick="initMap()">Home</a>
-        <a id="fs" href="javascript:void(0);" onclick="DisplayFilter()">FilterSearch</a>
-        <a id="contact"href="#contact">Contact</a>
-        <a id="about" href="#about">About</a>
+        <a id="home" href="javascript:void(0);" onclick="initMap()"><img style="margin-right:5px;height: 20px;" src="../images/home.png" />Home</a>
+        <a id="fs" href="javascript:void(0);" onclick="DisplayFilter()"><img style="margin-right:5px;" src="../images/filter.png" />Filter Search</a>
+        <a id="contact"href="#contact"><img style="margin-right:5px;" src="../images/contact.png" />Contact</a>
+        <a id="about" href="#about"><img style="margin-right:5px;" src="../images/about.png" />About</a>
         <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="responsive_nav()">&#9776;</a>
     </div>
     <div class="filter" id="filterID">

@@ -94,10 +94,17 @@ function InitApiUrl(){
 
     if(sort == 1){
         sortiranje = '&sortByDistance=1';
-    }else{
+    }else if(sort == 2){
         sortiranje = '&price=1';
+    }else if(sort == 3){
+        sortiranje = '&price=1';
+    }else if(sort == 4){
+        sortiranje = '&price=2';
+    }else if(sort == 5){
+        sortiranje = '&price=3';
+    }else if(sort == 6){
+        sortiranje = '&price=4';
     }
-
     tip_pretrage = 'coffee';
     radijus = 1000.0;
     ll = pozicija_korisnika.lat+', '+pozicija_korisnika.lng;
@@ -127,23 +134,51 @@ function GenerateVenues(){
 }
 function SortirajPo(value)
 {   
-    if(value==2){
+    if(value == 2){
         document.getElementById("filterID").innerHTML = `
             <div class="text_filtera">
             <span >Use filter option to search by coffee price</span><br><br>
             <label class="labela" for="Sortiraj">Price by:</label>
-            <form>
-                <input type="radio" name="Cheap" value="1" checked>Cheap<br>
-                <input type="radio" name="Moderate" value="2">Moderate<br>
-                <input type="radio" name="Expensive" value="3">Expensive<br>
-                <input type="radio" name="Very Expensive" value="4"> Very Expensive
-            </form>
+            <div class="container">
+                <ul>
+                    <li>
+                        <input type="radio" class="priceradio" id="c-option" name="PriceRadio">
+                        <label for="c-option">Cheap</label>
+                        <div class="check"></div>
+                    </li>
+                    <li>
+                        <input type="radio" class="priceradio" id="m-option" name="PriceRadio">
+                        <label for="m-option">Moderate</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                    <li>
+                        <input type="radio" class="priceradio" id="e-option" name="PriceRadio">
+                        <label for="e-option">Expensive</label>
+                        <div class="check"><div class="inside"></div></div>
+                    </li>
+                    <li>
+                        <input type="radio" class="priceradio" id="v-option" name="PriceRadio">
+                        <label for="v-option">Very Expensive</label>
+                        <div class="check"><div class="inside"></div></div>
+                     </li>
+                </ul>
+            </div>
+            <a href="javascript:void(0);" onclick="ApplyFilter()"><div class="dugme2">Apply</div></a>
             <a href="javascript:void(0);" onclick="CloseFilter()"><div class="dugme">Close [X]</div></a>
             </div>
         `;
-        //document.getElementById("filterID").style.height = "none";
     }else{
         document.getElementById("filterID").style.display = "none";
+        document.getElementById("filterID").innerHTML = `
+        <div class="text_filtera"><span >You can use filter option to search by distance or coffee price</span><br><br>
+         <label class="labela" for="Sortiraj">Sort by:</label>
+         <select class="klasa_select" id ="Sortiraj" name="Sortiraj" onmousedown="this.value='';" onchange="SortirajPo(this.value);">
+             <option value='1' selected="Distance">Distance</option>
+             <option value='2'>Price</option>
+         </select>
+         <a href="javascript:void(0);" onclick="CloseFilter()"><div class="dugme">Close [X]</div></a>
+         </div>
+        `;
     }
     sort = value;
     initMap();
