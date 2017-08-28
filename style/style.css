@@ -143,6 +143,9 @@ a {
     .slika_td{
         display:none;
     }
+    .distance{
+        display:none;   
+    }
 }
 #display {
     width: 30%;
@@ -178,7 +181,7 @@ td{
     background-image: -ms-linear-gradient(top,#797979,#585858);
     background-image: -o-linear-gradient(top,#797979,#585858);
 }
-#display table tr:hover{
+#display table tr.hover_tr:hover{
     background: #3C3C3C;
     height: 130px;
     cursor: pointer;
@@ -204,6 +207,26 @@ td{
     width: 70%;
     float: left;
     height: 86%;
+}
+#initialization{
+    background: rgba(78, 78, 78, 0.65);
+    width: 100%;
+    display:none;
+    position: absolute;
+    z-index: 9999;
+    height: 86%;
+}
+#about_page{
+    background: rgba(78, 78, 78, 0.65);
+    width: 100%;
+    display:none;
+    position: absolute;
+    z-index: 900;
+    height: 86%;
+}
+.init_image{
+    margin-left: 40%;
+    margin-top: 10%;
 }
 .klasa_select{
     display: block;

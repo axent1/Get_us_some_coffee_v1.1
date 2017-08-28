@@ -20,8 +20,13 @@ function Globalna(){
     var mesta;
     var cityCircle;
     var infoWindow;
+
+    document.getElementById('about_page').style.display = 'none';
+    document.getElementById('initialization').style.display = 'block';
+
     initMap();
     // iscrtavanje mape.
+
 
 
     function initMap() {
@@ -58,6 +63,7 @@ function Globalna(){
                 position: new google.maps.LatLng(pozicija_korisnika.lat,pozicija_korisnika.lng),
                 animation: google.maps.Animation.BOUNCE,
                 icon: '../images/user_marker.png',
+                title: 'Your current position',
                 map: map
             });
             cityCircle = new google.maps.Circle({
@@ -152,12 +158,12 @@ function Globalna(){
         $.get(url, function (result) {
             //$('#display').text(JSON.stringify(url));
             mesta = result.response.groups[0].items;  // groups[0] zato sto su lose napravili json format, pa taj objekat ima nekako 2 niza gde je drugi prazan, a prvi sadrzi informacije
-            $('#display').append('<table><tbody><tr class="opisi"><td>No.</td><td>Picture</td><td>Name</td><td>Distance</td></tr>');
+            $('#display').append('<table><tbody><tr class="opisi"><td class="broj">No.</td><td class="slika_td">Picture</td><td>Name</td><td class="distance">Distance</td></tr>');
             for (var i in mesta){
                 i++;
                 broj = i;
                 i--;
-                str =  '<tr onclick="calcRoute(markers['+i+'].getPosition(),'+i+');" id='+i+'>';
+                str =  '<tr class="hover_tr" onclick="calcRoute(markers['+i+'].getPosition(),'+i+');" id='+i+'>';
                 str += '<td class="broj">' + broj + '</td>';
                 str += '<td class="slika_td"><img width="80px" height="80px" src="https://igx.4sqi.net/img/general/300x300' + mesta[i].venue.photos.groups[0].items[0].suffix + '" /></td>';
                 str += '<td class="opis_td"><div class="opis_liste">'+mesta[i].venue.name+'</div></td>'; // zameni sa javascript a ne Jquery (i vidi isto za url ako umes)
@@ -182,6 +188,9 @@ function Globalna(){
                 });      
             }
             $('#display').append('</table></tbody>');
+
+            document.getElementById('initialization').style.display = 'none';
+            
         });
     }
     // Funkciji se prosledjuje vrednost po cemu se sortira 1-distanca, 2-cena low, 3-cena medium, 4-cena high, 5-cena very high
@@ -237,7 +246,8 @@ function SortirajPo(value)
         `;
     }
     sort = value;
-    Globalna(1);
+    document.getElementById('about_page').style.display = 'none';
+    Globalna();
 }
 function calcRoute(v1,v2) {
     var start = pozicija_korisnika;
@@ -261,7 +271,9 @@ function calcRoute(v1,v2) {
             }
             infowindows[v2].open(map,markers[v2]);
             document.getElementById(Index_id).style.background = null;
+            document.getElementById(Index_id).style.height = null;
             document.getElementById(v2).style.background = '#37b95f';
+            document.getElementById(v2).style.height = '140px';
             Index_id = v2;
         } else {
             alert("Directions Request from " + start.toUrlValue(6) + " to " + end.toUrlValue(6) + " failed: " + status);

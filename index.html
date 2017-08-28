@@ -56,6 +56,10 @@
                 }
             } 
       }
+    function load_about() {
+         document.getElementById("about_page").innerHTML='<object style="width: 100%; height: 100%;" type="text/html" data="about.html" ></object>';
+         document.getElementById('about_page').style.display = 'block';
+    }
   </script>
 </head>
 <body>
@@ -63,7 +67,7 @@
         <a id="home" href="javascript:void(0);" onclick="SortirajPo(1)"><img style="margin-right:5px;height: 20px;" src="../images/home.png" />Home</a>
         <a id="fs" href="javascript:void(0);" onclick="DisplayFilter()"><img style="margin-right:5px;" src="../images/filter.png" />Filter Search</a>
         <a id="contact" href="mailto:axentiyewic@elfak.rs" target="_blank"><img style="margin-right:5px;" src="../images/contact.png" />Contact</a>
-        <a id="about" href="#about"><img style="margin-right:5px;" src="../images/about.png" />About</a>
+        <a id="about" href="javascript:void(0);" onclick="load_about()"><img style="margin-right:5px;" src="../images/about.png" />About</a>
         <a href="javascript:void(0);" style="font-size:19px;" class="icon" onclick="responsive_nav()">&#9776;</a>
     </div>
     <div class="filter" id="filterID">
@@ -76,6 +80,8 @@
         <a href="javascript:void(0);" onclick="CloseFilter()"><div class="dugme">Close [X]</div></a>
         </div>
     </div>
+        <div id="initialization"><img class="init_image" src="../images/loading.gif" /></div>
+        <div id="about_page"></div>
         <div id="display"></div>
         <div id="map"></div>
     <footer>
