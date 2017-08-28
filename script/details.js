@@ -1,7 +1,9 @@
+// globalne promenljive
 var ukljucen = 0;
 var currentSlide = 0;
 var slideInterval = setInterval(nextSlide,2000);
-    
+
+// funkcija koja vrsi promenu slike na slajderu
 function nextSlide(){
     if(ukljucen==1){ 
         var slides = document.querySelectorAll('#slides .slide');        
@@ -11,6 +13,7 @@ function nextSlide(){
     }
 }
 
+// funkcija za details stranicu, preuzima parametre i po ID-u trazi 10 slika sa API-a venues/photos
 function DisplayDetails(id,name,price,distance,tips){
     var slide;
 
@@ -30,6 +33,7 @@ function DisplayDetails(id,name,price,distance,tips){
         price1 = 'Very Expensive';
     }
 
+    // inicijalizacija API-a
     var client_id1 = 'OZZ0YQOCRCTTEEHRG3HL0IWMKTAJ0KCRPU1WS3O5WVINZI3K';
     var client_secret1 = 'Z11HIZTIKBNALPZXJNFRPAF3XR0U3IJEYYHWIO4SJHY43SNG';
     var base_url1 = 'https://api.foursquare.com/v2/';
@@ -44,6 +48,7 @@ function DisplayDetails(id,name,price,distance,tips){
 
     PreuzmiSlike();
 
+    // funkcija za obradu API-a, preuzimanje JSON formata i lepljenje na DIV element slajder i opise
     function PreuzmiSlike(){
         $.get(url1, function (result) {    
             var slide = result.response.photos.items; 
@@ -60,8 +65,6 @@ function DisplayDetails(id,name,price,distance,tips){
                 }
             }
             $('#details_page').append('</ul>');
-            //document.getElementById('initialization').style.display = 'none';
-            //
         });
     }
 }

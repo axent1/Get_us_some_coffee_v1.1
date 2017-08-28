@@ -14,13 +14,14 @@ function Globalna(){
     // Deklaracija API promenljivih
     var client_id,client_secret,base_url,endpoint,url,params,key
     var limit,sortiranje,tip_pretrage,radijus,ll;
-    // Deklaracija ostalih promenljivih
+    // Deklaracija ostalih pomocnih promenljivih
     var str; 
     var broj = 0;
     var mesta;
     var cityCircle;
     var infoWindow;
 
+    // pocetno inicijalizovanje blokova koji se prikazuju/sakrivaju na pocetnoj strani
     document.getElementById('about_page').style.display = 'none';
     document.getElementById('details_page').style.display = 'none';
     document.getElementById("details_page").innerHTML = '';
@@ -115,14 +116,14 @@ function Globalna(){
         if (confirm("The Geolocation service failed. Click OK if you turned ON geolocation")) {
             Globalna();
         } else {
-            document.getElementById('initialization').style.display = 'none';            
+            document.getElementById('initialization').style.display = 'none ';            
         }
         infoWindow.open(map);
         map.setZoom(2);
         $('#display').append('<br><strong><font color="white">Turn location on for your device</font></strong><br><a href="https://support.google.com/accounts/answer/3467281?hl=en">[CLICK]</a>');
     }
 
-    // inicijalizacija API url adrese 
+    // inicijalizacija API url adrese za venues/explore
     function InitApiUrl(){
         // inicijalizacija API endpointa i kljuceva
         client_id = 'OZZ0YQOCRCTTEEHRG3HL0IWMKTAJ0KCRPU1WS3O5WVINZI3K';
@@ -157,10 +158,9 @@ function Globalna(){
         GenerateVenues();
     }
 
-    // Generisanje 10 markera u zadatom radijusu po udaljenosti.
+    // Generisanje 10 markera u zadatom radijusu od 1km, sortirani po udaljenosti sa odabirom onih koji rade.
     function GenerateVenues(){
         $.get(url, function (result) {
-            //$('#display').text(JSON.stringify(url));
             mesta = result.response.groups[0].items;  // groups[0] zato sto su lose napravili json format, pa taj objekat ima nekako 2 niza gde je drugi prazan, a prvi sadrzi informacije
             $('#display').append('<table><tbody><tr class="opisi"><td class="broj">No.</td><td class="slika_td">Picture</td><td>Name</td><td class="distance">Distance</td></tr>');
             for (var i in mesta){
@@ -199,7 +199,7 @@ function Globalna(){
     }
 }
 
-// Funkciji se prosledjuje vrednost po cemu se sortira 1-distanca, 2-cena low, 3-cena medium, 4-cena high, 5-cena very high
+// Funkciji se prosledjuje vrednost po cemu se sortira 1-distanca, 2-cena low, 3-cena low, 4-cena medium, 5-cena high, 6-cena very high
 function SortirajPo(value)
 {   
     if(value == 2){
