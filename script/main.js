@@ -23,12 +23,9 @@ function Globalna(){
 
     document.getElementById('about_page').style.display = 'none';
     document.getElementById('initialization').style.display = 'block';
-
     initMap();
+
     // iscrtavanje mape.
-
-
-
     function initMap() {
         directionsDisplay = new google.maps.DirectionsRenderer();
         map = new google.maps.Map(document.getElementById('map'), {
@@ -166,7 +163,7 @@ function Globalna(){
                 str =  '<tr class="hover_tr" onclick="calcRoute(markers['+i+'].getPosition(),'+i+');" id='+i+'>';
                 str += '<td class="broj">' + broj + '</td>';
                 str += '<td class="slika_td"><img width="80px" height="80px" src="https://igx.4sqi.net/img/general/300x300' + mesta[i].venue.photos.groups[0].items[0].suffix + '" /></td>';
-                str += '<td class="opis_td"><div class="opis_liste">'+mesta[i].venue.name+'</div></td>'; // zameni sa javascript a ne Jquery (i vidi isto za url ako umes)
+                str += '<td class="opis_td"><div class="opis_liste">'+mesta[i].venue.name+'</div><a href="#" onclick="DisplayDetails(\'' + mesta[i].venue.id + '\',\''+mesta[i].venue.name+'\',\'' +mesta[i].venue.price.tier+'\',\''+mesta[i].venue.location.distance+'\')"><div class="dugme2">Details</div></a></td>';
                 str += '<td class="distance">' + mesta[i].venue.location.distance + '</td>';
                 str += '</tr>';
                 $('#display table tbody').append(str);
@@ -193,8 +190,9 @@ function Globalna(){
             
         });
     }
-    // Funkciji se prosledjuje vrednost po cemu se sortira 1-distanca, 2-cena low, 3-cena medium, 4-cena high, 5-cena very high
 }
+
+// Funkciji se prosledjuje vrednost po cemu se sortira 1-distanca, 2-cena low, 3-cena medium, 4-cena high, 5-cena very high
 function SortirajPo(value)
 {   
     if(value == 2){
@@ -249,6 +247,8 @@ function SortirajPo(value)
     document.getElementById('about_page').style.display = 'none';
     Globalna();
 }
+
+// funkcija za iscrtavanje rute izmedju trenutne lokacija i selektovanog cafea
 function calcRoute(v1,v2) {
     var start = pozicija_korisnika;
     var end = v1;

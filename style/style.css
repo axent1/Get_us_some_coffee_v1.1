@@ -201,7 +201,11 @@ td{
     text-align: center;    
 }
 .opis_td{
-    text-align: center;
+    text-align: left;
+    padding-left: 10px;
+}
+.opis_liste{
+    margin-bottom: 10px;
 }
 #map {
     width: 70%;
@@ -217,6 +221,14 @@ td{
     height: 86%;
 }
 #about_page{
+    background: rgba(78, 78, 78, 0.65);
+    width: 100%;
+    display:none;
+    position: absolute;
+    z-index: 900;
+    height: 86%;
+}
+#details_page{
     background: rgba(78, 78, 78, 0.65);
     width: 100%;
     display:none;
