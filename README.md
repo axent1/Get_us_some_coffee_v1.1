@@ -33,6 +33,16 @@ back to current user location
  *  Node.js live-server (npm install -g live-server)
  *  GoogleChrome
  *  GoogleChrome Console and Developer tools
+ 
+[Instructions to Run]
+   * Place in some folder
+   * Use node.js "live-server" on that folder
+   
+[Photos]
+     * http://prntscr.com/gdyjhr
+     * http://prntscr.com/gdyjo1
+     * http://prntscr.com/gdyjto
+     * http://prntscr.com/gdyk24
 
 [Used links]
 
