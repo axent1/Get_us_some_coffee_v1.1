@@ -58,7 +58,6 @@ function Globalna(){
                 position: new google.maps.LatLng(pozicija_korisnika.lat,pozicija_korisnika.lng),
                 animation: google.maps.Animation.BOUNCE,
                 icon: '../images/user_marker.png',
-                title: 'Tvoja trenutna pozicija',
                 map: map
             });
             cityCircle = new google.maps.Circle({
@@ -72,8 +71,8 @@ function Globalna(){
                 radius: 1000.0
             });
             infoWindow.setPosition(pozicija_korisnika);
-            infoWindow.setContent('Tvoja Lokacija');
-            infoWindow.open(map);
+            infoWindow.setContent('Your position');
+            infoWindow.open(map,marker);
             map.setCenter(pozicija_korisnika);
             setTimeout(function(){
                     infoWindow.close();

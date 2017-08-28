@@ -64,8 +64,11 @@ a {
     border-radius: 3px;
 }
 .dugme:hover{
-	background-image: -webkit-linear-gradient(top,#eb0e0e,#ca3f3f);
-	background-image: -moz-linear-gradient(top,#eb0e0e,#ca3f3f);
+	background: #eb0e0e;
+    background: #eb0e0e;
+    -webkit-transition: background 500ms ease-out 1000ms linear;
+    -ms-transition: background 500ms ease-out 1000ms linear;
+    transition: background 500ms ease-out 1000ms linear;
 	cursor: pointer;
 }
 .dugme2{
@@ -83,9 +86,12 @@ a {
     padding: 8px;
     border-radius: 3px;
 }
-.dugme2.klasa_select{
-	background-image: -webkit-linear-gradient(top,#0E62EB,#3F74CA);
-	background-image: -moz-linear-gradient(top,#0E62EB,#3F74CA);
+.dugme2:hover{
+	background: #0E62EB;
+    background: #0E62EB;
+    -webkit-transition: background 500ms ease-out 1000ms linear;
+    -ms-transition: background 500ms ease-out 1000ms linear;
+    transition: background 500ms ease-out 1000ms linear;
 	cursor: pointer;
 }
 .topnav {
@@ -104,6 +110,9 @@ a {
 }
 .topnav a:hover {
     background-color: #178466;
+    -webkit-transition: background-color 1000ms linear;
+    -ms-transition: background-color 1000ms linear;
+    transition: background-color 1000ms linear;
     color: white;
 }
 .topnav .icon {
@@ -127,6 +136,12 @@ a {
         float: none;
         display: block;
         text-align: left;
+    }
+    .broj {
+        display: none;
+    }
+    .slika_td{
+        display:none;
     }
 }
 #display {
@@ -159,10 +174,17 @@ td{
 }
 #display table tr{
     background-image: -webkit-linear-gradient(top,#797979,#585858);
+    background-image: -moz-linear-gradient(top,#797979,#585858);
+    background-image: -ms-linear-gradient(top,#797979,#585858);
+    background-image: -o-linear-gradient(top,#797979,#585858);
 }
 #display table tr:hover{
-    background-image: -webkit-linear-gradient(top,#3C3C3C,#181818);
+    background: #3C3C3C;
+    height: 130px;
     cursor: pointer;
+    -webkit-transition: background 500ms ease-out;
+    -ms-transition: background 500ms ease-out;
+    transition: background 500ms ease-out;
 }
 .slika_td{
     width: 50px;
